@@ -10,9 +10,15 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.image('spark0', './assets/orange.png');
     }
 
     create() {
+
+
+
+
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 
@@ -33,7 +39,9 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
-
+        
+        
+        
 
 
 
@@ -132,16 +140,40 @@ class Play extends Phaser.Scene {
     }
 
     shipExplode(ship) {
+        //the emitter
+        
+        this.explosion = this.add.particles('spark0').createEmitter({
+            x: 400,
+            y: 300,
+            speed: { min: -800, max: 800 },
+            angle: { min: 0, max: 360 },
+            scale: { start: 0.5, end: 0 },
+            blendMode: 'SCREEN',
+            active: true,
+            lifespan: 600,
+        });
+        this.explosion.setPosition(ship.x + 32, ship.y + 30);
+
+        this.explosion.setVisible(true);
+
+
         // temporarily hide ship
         ship.alpha = 0;
         // create explosion sprite at ship's position
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
         boom.anims.play('explode');             // play explode animation
+        //emitter0.x = ship.x;
+        //emitter0.y = ship.y;
+        //emitter0.active = true;
+
         boom.on('animationcomplete', () => {    // callback after anim completes
+            //emitter0.active = false;
             ship.reset();                         // reset ship position
             ship.alpha = 1;                       // make ship visible again
             boom.destroy();       
                             // remove explosion sprite
+
+            this.explosion.setVisible(false);
         });      
         this.sound.play('sfx_explosion');
 
