@@ -11,7 +11,7 @@ let borderPadding = borderUISize / 3;
 let keyF, keyR, keyLEFT, keyRIGHT, keyDOWN;
 let twoplayer = false;
 let activep = false;
-
+let timer = 0;
 
 //let buttonsPressed = MouseEvent.buttons
 //console.log(buttonsPressed)

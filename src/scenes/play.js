@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
+        this.load.image('freeze', './assets/freezegun.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.image('spark0', './assets/orange.png');
@@ -29,7 +30,9 @@ class Play extends Phaser.Scene {
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
 
         // add Rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(-1, 0);
+        
+        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0, 0);
+        this.p1freezegun = new Freezegun(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'freeze').setOrigin(0, 0);
 
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
@@ -90,6 +93,28 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+
+        //freeze ray
+        if(game.input.activePointer.button == 1){
+            this.ship01.moveSpeed = 0;
+            this.ship02.moveSpeed = 0;
+            this.ship03.moveSpeed = 0;
+            this.p1freezegun.x = this.p1Rocket.x
+            this.p1freezegun.y =this.p1Rocket.y - 15
+
+            if(!timer){
+                this.shipFreezeSound(this.p1freezegun);
+            }
+            timer += 1
+            
+        }else{
+            this.p1freezegun.x = 800
+            this.p1freezegun.y = 800
+            timer = 0
+            this.ship01.moveSpeed = 3;
+            this.ship02.moveSpeed = 3;
+            this.ship03.moveSpeed = 3;
+        }
         // check key input for restart / menu
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -139,6 +164,10 @@ class Play extends Phaser.Scene {
         }
     }
 
+
+    shipFreezeSound(freezegun){
+        this.sound.play('sfx_freezegun');
+    }
     shipExplode(ship) {
         //the emitter
         
