@@ -25,13 +25,27 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+        let bottext = {
+          fontFamily: 'Courier',
+          fontSize: '28px',
+          backgroundColor: '#00008B',
+          color: '#F0FFFF',
+          align: 'right',
+          padding: {
+              top: 5,
+              bottom: 5,
+          },
+          fixedWidth: 0
+      }
         
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, 'Use mouse to aim', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, "Left click to fire rocket", menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← for Novice or → for Expert', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize*3 + borderPadding*3, 'Press ← for Novice or → for Expert', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2 + borderPadding*2, 'Middle click to use the FREEZE RAY', bottext).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
