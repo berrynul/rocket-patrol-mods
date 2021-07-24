@@ -9,7 +9,9 @@
 //  Use Phaser's particle emitter to create a particle explosion when the rocket hits the spaceship (20)
 //  Create and implement a new weapon (w/ new behavior and graphics) (20)
 
-//Note: I created an animation spritesheet for the spaceships dying, you can still see it even if it's obscured a bit by the particles
+//Notes: 
+//I created an animation spritesheet for the spaceships dying, you can still see it even if it's obscured a bit by the particles
+//Middleclick refers to clicking down on the scrollwheel
 
 
 let config = {
